@@ -1,0 +1,26 @@
+Por cada play en un playbook debemos elegir cuáles son las máquinas objetivo para ejecutar las tareas.
+
+- hosts: webservers 
+remote_user: root 
+El parámetro remote_user se refiere simplemente al usuario remoto para ejecutar las tareas.
+
+Los usuarios remotos pueden definirse de un modo genérico para todas las tareas o también definirse por tareas individuales:
+
+- hosts: webservers 
+remote_user: root 
+tasks: 
+- name: remote user is mario 
+copy: ... 
+remote_user: mario 
+HOSTS Y USUARIOS
+Podemos ejecutar una tarea mediante escalado de privilegios haciendo uso del módulo become:
+
+- hosts: webservers 
+remote_user: yourname 
+become: yes 
+become_user: www-data 
+
+Además, es posible especificar el orden en el que se ejecutan las tareas en los hosts haciendo uso del módulo order:
+
+- hosts: all 
+order: sorted 
