@@ -1,0 +1,59 @@
+Obtener información de un archivo Si queremos obtener información sobre permisos o diferentes propiedades de un archivo, tenemos que utilizar el módulo stat:
+
+
+$ ansible all -m stat -a "path=/etc/hosts" 
+192.168.33.11 | SUCCESS => { 
+... 
+192.168.33.12 | SUCCESS => { 
+... 
+ 
+Copiar un archivo a los servidores
+
+
+$ ansible all -m copy -a "src=/etc/hosts dest=/tmp/hosts" 
+192.168.33.11 | SUCCESS => { 
+... 
+192.168.33.12 | SUCCESS => { 
+... 
+El parámetro src puede ser un archivo o un directorio completo. Si incluimos una barra ‘/’ al final, solo los contenidos del directorio se copiaran al destino.
+
+Descargar un archivo de los servidores
+
+El módulo fetch funciona igual que el copy pero a la inversa. Si antes copiábamos nuestro archivo hosts a las máquinas, ahora nos descargamos los suyos:
+
+$ ansible all -s -m fetch -a "src=/etc/hosts dest=/tmp" 
+192.168.33.12 | SUCCESS => { 
+"dest": "/tmp/192.168.33.12/etc/hosts", ... 
+192.168.33.11 | SUCCESS => { 
+"dest": "/tmp/192.168.33.11/etc/hosts", ... 
+Crear archivos y directorios
+
+El módulo file puede utilizarse para crear archivos y directorios, además de gestionar los permisos o crear enlaces simbólicos.
+
+$ ansible all -m file -a "dest=/tmp/test mode=644 
+state=directory" 
+192.168.33.12 | SUCCESS => { 
+... 
+192.168.33.11 | SUCCESS => { 
+... 
+Touch de un archivo:
+
+
+$ ansible all -m file -a "dest=/tmp/file mode=644 
+state=touch" 
+192.168.33.12 | SUCCESS => { 
+... 
+192.168.33.11 | SUCCESS => { 
+... 
+ 
+Eliminar archivos y directorios
+
+Para eliminar un archivo o directorio simplemente hay que establecer su estado a absent.
+
+
+$ ansible all -m file -a "dest=/tmp/file state=absent" 
+192.168.33.12 | SUCCESS => { 
+... 
+192.168.33.11 | SUCCESS => { 
+... 
+Para más información sobre el módulo file, podéis visitar su entrada en la documentación de Ansible: http://docs.ansible.com/ansible/file_module.html
