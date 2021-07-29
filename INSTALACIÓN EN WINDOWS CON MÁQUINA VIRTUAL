@@ -1,0 +1,30 @@
+Ansible no está disponible en Windows, pero hay diferentes maneras de poder utilizarlo:
+
+Máquina virtual con Linux
+Bash de Ubuntu en Windows
+Cygwin
+Vagrant
+INSTALACIÓN EN WINDOWS CON MÁQUINA VIRTUAL
+Instalar VirtualBox
+Descargar Ubuntu 16.04
+Crear máquina virtual 4. Seguir los pasos indicados previamente para instalar Ansible en Ubuntu
+INSTALACIÓN EN WINDOWS 10 CON VAGRANT
+Los pasos a seguir son:
+
+Instalar VirtualBox
+Instalar Vagrant
+Configuración de la máquina virtual con Ubuntu 16.04
+Seguir los pasos indicados previamente para instalar Ansible en Ubuntu
+Comprobar la versión de Vagrant: 
+$ vagrant --version 
+Vagrant 1.9.3  
+Comandos Vagrant disponibles
+
+vagrant up
+vagrant ssh
+vagrant provision
+vagrant suspend
+vagrant resume
+vagrant halt
+vagrant status
+vagrant destroy
