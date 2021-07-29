@@ -1,0 +1,34 @@
+Un playbook se compone de varios plays. El objetivo de un play es mapear un grupo de hosts con unos determinados roles, los cuales son representados por tareas (tasks). En su expresión más básica, una tarea no es más que la llamada a un determinado módulo de Ansible.
+
+Es posible orquestar muchas máquinas al mismo tiempo con los plays de Ansible gracias a la agrupación de los nodos en los inventarios de Ansible.
+
+Con estos comandos podríamos instalar un servidor Apache en cada nodo:
+
+$ sudo apt-get install apache2 
+$ sudo service apache2 start 
+Con este playbook de Ansible lo haríamos de forma paralela en ambos nodos:
+
+---  
+hosts: all 
+remote_user: root 
+tasks: 
+- name: Ensure Apache is at the latest version 
+apt: name=apache2 state=latest 
+- name: ensure apache is running 
+service: name=apache2 state=started enabled=yes 
+ 
+Podemos ejecutar el playbook anterior con:
+
+$ ansible-playbook playbook.yaml 
+Tal y como hemos mencionado antes, los playbooks pueden contener múltiples plays:
+
+- hosts: all 
+remote_user: root 
+tasks: 
+- name: Ensure Apache is at the latest version 
+apt: name=apache2 state=latest 
+- hosts: databases 
+tasks: 
+- name: Ensure MariaDB is at the latest version 
+apt: name=mariadb state=latest 
+ 
