@@ -1,0 +1,25 @@
+INSTALACIÓN EN MAC
+Instalar Homebrew
+Instalar Python: 
+$ brew install python
+Instalar Ansible: 
+$ sudo pip install ansible
+INSTALACIÓN EN FEDORA/RHEL/CENTOS
+La manera más sencilla de instalar Ansible en sistemas Fedora es haciendo uso del paquete oficial en yum:
+
+$ yum -y install ansible 
+INSTALACIÓN EN DEBIAN/UBUNTU
+Instalar Ansible en sistemas Debian, Ubuntu y derivados es haciendo uso del paquete oficial en apt:
+
+$ sudo apt-add-repository ppa:ansible/ansible 
+$ sudo apt-get update 
+$ sudo apt-get install ansible 
+INSTALACIÓN EN DEBIAN/UBUNTU
+Si obtienes un error parecido a “sudo: add-apt-repository: command not found”, probablemente tengas que instalar el paquete python-software-properties:
+
+$ sudo apt-get install python-software-properties
+INSTALACIÓN
+Una vez se haya instalado Ansible, asegúrate de que funciona correctamente haciendo uso del comando Ansible para comprobar la versión:
+
+$ ansible --version 
+ansible 2.3.0.0 
