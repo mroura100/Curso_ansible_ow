@@ -1,0 +1,9 @@
+Las tareas periódicas que se ejecutan mediante un cron se gestionan mediante el crontab del sistema. Lo normal en estos casos es ejecutar crontab -e para editar los crones, pero con el módulo de crones de Ansible, la gestión de los mismos es muy sencilla.
+
+Para ejecutar un script todos los días a las 4 de la madrugada:
+
+$ ansible all -s -m cron -a "name='my-cron' hour=5 job='/script.sh'" 
+192.168.33.12 | SUCCESS => { 
+... 
+192.168.33.11 | SUCCESS => { 
+... 
