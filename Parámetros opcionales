@@ -1,0 +1,21 @@
+--inventory=PATH (-i PATH) 
+Define un archivo de inventario situado en una determinada ruta.
+
+Si no especificamos este parámetro coge por defecto el inventario en /etc/ansible/hosts.
+
+--verbose (-v) 
+Ejecutar el playbook en modo verbose, es decir, mostrando la salida de todos los comandos.
+
+Podemos pasarle la opción -vvvv para que nos de todos los detalles de la ejecución.
+
+--extra-vars=VARS (-e VARS) 
+Añadir variables adicionales a la ejecución del playbook en formato clave1=valor1,clave2=valor2
+
+--forks=NUM (-f NUM) 
+El número de forks para agrupar la ejecución de un playbook en diferentes servidores.
+
+--connections=TYPE (-c TYPE) 
+Se refiere al tipo de conexión que se va a utilizar. Por defecto es SSH, pero también podría ser local para ejecutar un playbook en el entorno local en el que se ejecuta Ansible.
+
+--check 
+Sirve para ejecutar un playbook en check mode, es decir, que todas las tareas definidas se comprobarán en todos los hosts, pero ninguna llegará a ejecutarse.
