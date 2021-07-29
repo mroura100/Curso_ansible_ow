@@ -1,0 +1,21 @@
+Cada play contiene una lista de tareas, las cuales se ejecutan en orden y solo una al mismo tiempo. Es importante saber que el orden de las tareas es el mismo para todos los nodos.
+
+Si falla una tarea, se puede volver a ejecutar, ya que los módulos deben ser idempotentes, es decir, que ejecutar un módulo varias veces debe tener el mismo resultado que si se ejecuta una vez.
+
+Todas las tareas deben tener un name, el cual se incluye en la salida del comando al ejecutar el playbook. Su objetivo es que la persona que ejecute Ansible pueda leer con facilidad la ejecución del playbook.
+
+Las tareas se declaran en el formato module: options. En un ejemplo anterior nos segurábamos de que el servicio apache2 se estuviese ejecutando:
+
+--- hosts: all 
+remote_user: root 
+tasks: 
+- name: ensure apache is running 
+service: name=apache2 state=started enabled=yes 
+ 
+Los módulos command y shell son los únicos comandos que no utilizan el formato clave=valor, sino que directamente se le pasa como parámetro el comando que deseamos ejecutar:
+
+--- hosts: all 
+remote_user: root 
+tasks: 
+- name: Run a command 
+shell: /usr/bin/command 
