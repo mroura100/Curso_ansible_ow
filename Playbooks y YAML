@@ -1,0 +1,73 @@
+Los playbooks nos proporcionan una manera totalmente diferente de utilizar Ansible. Los comandos ad-hoc hacen de Ansible una herramienta muy potente, pero los playbooks la convierten en “la herramienta”.
+
+Mientras que podemos ejecutar comandos ad-hoc con Ansible, los playbooks podemos tenerlos en un control de versiones como Git. Además, pueden ejecutar tareas tal y como nosotros queramos haciendo uso de los inventarios, tags, roles, etc. Una de las cosas que más atrae a los DevOps a Ansible es que es muy sencillo convertir shell scripts en playbooks.
+
+YAML
+Ansible utiliza YAML porque para los humanos es más fácil de leer que otros formatos como XML o JSON.
+
+En Ansible, muchos archivos YAML comienzan con una lista. Cada item de la lista contiene una clave y/o valor, comúnmente llamado “hash” o “diccionario”. Antes de comenzar a escribir playbooks, debemos saber cómo declarar una de estas listas.
+
+CONCEPTOS BÁSICOS DE YAML
+Otra de las cosas importantes de YAML es que todos los archivos empiezan por guiones (---) y acaban con puntos (...).
+
+Esto es opcional, pero recomendable para seguir con el estándar.
+
+Todos los elementos de una lista son líneas que comienzan en el mismo nivel de indentación y cuyos dos primeros caracteres son un guión y un espacio “- “.
+
+En YAML los comentarios comienzan con una almohadilla #.
+
+
+# Lista de lenguajes de programación 
+languages: 
+- PHP 
+- Java 
+- C 
+- NodeJS 
+... 
+ 
+Un diccionario se representa en formato clave:valor
+
+
+# Empleado 
+mario: 
+nombre: Mario Pérez 
+twitter: @marioperest 
+trabajo: Desarrollador Backend 
+... 
+ 
+También es posible combinar listas y diccionarios
+
+# Empleado 
+mario: 
+nombre: Mario Pérez 
+twitter: @marioperest 
+trabajo: Desarrollador Backend 
+cualidades: 
+- Trabajo en equipo 
+- Eficiente 
+... 
+ 
+Las listas y los diccionarios también se pueden representar de forma abreviada:
+
+# Empleado 
+mario: {nombre: Mario Pérez, twitter: @marioperest, 
+trabajo: Desarrollador Backend} 
+# Lista de lenguajes de programación 
+languages: [‘PHP’, ‘Java’, ‘C’, ‘NodeJS’] 
+... 
+Las cadenas de caracteres deben ir entre comillas.
+
+--- 
+# Esto fallaría: 
+mario: profesor del curso de Ansible 
+# Esto no fallaría 
+mario: “profesor del curso de Ansible” 
+... 
+ 
+Ansible utiliza “{{ var }}” para las variables:
+
+
+--- 
+foo: “{{ variable }}” 
+bar: “{{ variable }}/path/to/file” 
+... 
