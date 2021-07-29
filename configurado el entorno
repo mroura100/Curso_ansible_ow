@@ -1,0 +1,48 @@
+Una vez hemos configurado el entorno en el que se ejecutará Ansible, pasaremos a configurar el nodo, es decir, el servidor que vamos a gestionar desde Ansible.
+
+Existen diferentes opciones a la hora de elegir una plataforma para alojar servidores. Existe DigitalOcean o Linode, pero dado que ya conocemos Vagrant y es gratuito, lo utilizaremos para hacer nuestras pruebas con Ansible.
+
+Una vez hayamos creado las máquinas virtuales con el fichero Vagrantfile que habéis visto en el vídeo, tendremos dos máquinas virtuales en Vagrant:
+
+vagrant-ansible (192.168.33.10)
+vagrant-node (192.168.33.11)
+Tenemos que comprobar si hay conexión entre ellas. Desde vagrant-ansible:
+
+$ ping 192.168.33.11 
+¿Podemos hacer SSH desde vagrant-ansible a vagrant-node?
+
+$ ssh vagrant@192.168.33.11 
+Tal y como podéis ver, tenemos el mismo hostname en ambas máquinas virtuales, lo cual puede llevar a confusión. Por lo tanto, los nuevos nombres de host serán:
+
+vagrant-ansible: controller
+vagrant-node: node
+Añadimos al archivo Vagrantfile de cada máquina virtual:
+
+vagrant-ansible: config.vm.hostname = "controller" 
+vagrant-node: config.vm.hostname = "node" 
+Reiniciamos las máquinas con provision para que se aplique la configuración:
+
+$ vagrant reload --provision 
+Ahora que ya hemos cambiado el hostname de las máquinas virtuales, ¿podemos hacer SSH como root a vagrant-node desde vagrant-ansible?
+
+$ ssh root@192.168.33.11 
+No, porque el login como root está deshabilitado. La solución es entrar con el usuario vagrant, pasarse a root, cambiar la contraseña y habilitar el acceso por SSH.
+
+vagrant@node:~$ sudo su 
+root@node:/home/vagrant# passwd 
+Enter new UNIX password: vagrant 
+Retype new UNIX password: vagrant 
+passwd: password updated successfully 
+root@node:/home/vagrant# vi /etc/ssh/sshd_config 
+Cambiar PermitRootLogin a yes
+
+root@node:/home/vagrant# service ssh restart 
+¿Podremos ahora entrar como root? (Contraseña: vagrant)
+
+vagrant@controller$ ssh root@192.168.33.11 
+Es preferible que Ansible pueda entrar como usuario root sin necesidad de introducir la contraseña en el servidor. Para ello, copiamos las claves SSH de controller a node: <
+
+vagrant@controller:~$ ssh-copy-id root@192.168.33.11 
+También copiaremos las claves al usuario vagrant porque no siempre hará falta ejecutar comandos como root.
+
+vagrant@controller:~$ ssh-copy-id vagrant@192.168.33.11 
