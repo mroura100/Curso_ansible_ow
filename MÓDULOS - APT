@@ -1,0 +1,55 @@
+MÓDULOS
+Hasta ahora, hemos estado leyendo información de nuestros servidores. Para realizar cambios en ellos, debemos utilizar los módulos de Ansible con el parámetro -m.
+
+Algunos módulos son yum, apt o service.
+
+MÓDULOS - APT
+
+Instalación de NTP
+
+$ ansible all -s -m apt -a "name=ntp state=installed" 
+192.168.33.11 | SUCCESS => { 
+... 
+192.168.33.12 | SUCCESS => { 
+... 
+MÓDULOS - SERVICIOS
+Activación del servicio NTP
+
+
+$ ansible all -s -m service -a "name=ntp 
+state=started enabled=yes" 
+Activación del servicio NTP
+
+
+$ ansible all -s -a "service ntp status" 
+192.168.33.12 | SUCCESS | rc=0 >> 
+● ntp.service - LSB: Start NTP daemon 
+Active: active (running) 
+192.168.33.11 | SUCCESS | rc=0 >> 
+● ntp.service - LSB: Start NTP daemon 
+Active: active (running) 
+El parámetro -s (--sudo) le indica a Ansible que ejecute el comando con sudo. Esto funcionará bien por defecto en máquinas virtuales Vagrant, pero si utilizáis servidores en Digital Ocean o cualquier otra plataforma, puede que tengáis que usar el parámetro -k (--ask-sudo-pass) o especificar -u root para indicarle que haga login como root.
+
+MÓDULOS - USUARIOS Y GRUPOS
+Gestión de usuarios y grupos
+
+Los módulos de Ansible hacen muy sencilla la gestión de usuarios y grupos. Por ejemplo, si quisiéramos añadir un grupo admin:
+
+
+$ ansible all -s -m group -a "name=admin state=present" 
+192.168.33.11 | SUCCESS => { 
+... 
+192.168.33.12 | SUCCESS => { 
+... 
+El módulo de grupos es muy sencillo. Se puede eliminar un grupo con state=absent, establecer un identificador de grupo con gid=[gid] o indicar si es un grupo de sistema con system=yes.
+
+Para añadir un usuario llamado mario al grupo que acabamos de añadir y crear su carpeta /home/mario, introducimos el siguiente comando:
+
+
+$ ansible all -s -m user -a "name=mario group=admin createhome=yes" 
+192.168.33.11 | SUCCESS => { 
+... 
+192.168.33.12 | SUCCESS => { 
+... 
+ 
+Podemos obtener más información sobre este módulo y ver todas sus opciones desde la documentación: http://docs.ansible.com/ansible/user_module.html
