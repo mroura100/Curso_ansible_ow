@@ -6,7 +6,7 @@ Instalar Ansible:
 $ sudo pip install ansible
 INSTALACIÓN EN FEDORA/RHEL/CENTOS
 La manera más sencilla de instalar Ansible en sistemas Fedora es haciendo uso del paquete oficial en yum:
-
+yum install epel-release -y
 $ yum -y install ansible 
 INSTALACIÓN EN DEBIAN/UBUNTU
 Instalar Ansible en sistemas Debian, Ubuntu y derivados es haciendo uso del paquete oficial en apt:
